@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class FishInstantiator : MonoBehaviour
+public class BoatManager : MonoBehaviour
 {
     public GameObject fishPrefab;
 

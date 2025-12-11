@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class Flocking : MonoBehaviour
+public class BoatAutoPilot : MonoBehaviour
 {
     public Vector3 baseRotation;
 
@@ -46,7 +46,7 @@ public class Flocking : MonoBehaviour
     private void Update()
     {
         var boidColliders = Physics2D.OverlapCircleAll(Position, neighborhoodRadius);
-        var boids = boidColliders.Select(o => o.GetComponent<Flocking>()).ToList();
+        var boids = boidColliders.Select(o => o.GetComponent<BoatAutoPilot>()).ToList();
         boids.Remove(this);
 
         Flock(boids);
@@ -56,7 +56,7 @@ public class Flocking : MonoBehaviour
         WrapAround();
     }
 
-    private void Flock(IEnumerable<Flocking> boids)
+    private void Flock(IEnumerable<BoatAutoPilot> boids)
     {
         var alignment = Alignment(boids);
         var separation = Separation(boids);
@@ -82,7 +82,7 @@ public class Flocking : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle) + baseRotation);
     }
 
-    private Vector2 Alignment(IEnumerable<Flocking> boids)
+    private Vector2 Alignment(IEnumerable<BoatAutoPilot> boids)
     {
         var velocity = Vector2.zero;
         if (!boids.Any()) return velocity;
@@ -97,7 +97,7 @@ public class Flocking : MonoBehaviour
         return steer;
     }
 
-    private Vector2 Cohesion(IEnumerable<Flocking> boids)
+    private Vector2 Cohesion(IEnumerable<BoatAutoPilot> boids)
     {
         if (!boids.Any()) return Vector2.zero;
 
@@ -113,7 +113,7 @@ public class Flocking : MonoBehaviour
         return steer;
     }
 
-    private Vector2 Separation(IEnumerable<Flocking> boids)
+    private Vector2 Separation(IEnumerable<BoatAutoPilot> boids)
     {
         var direction = Vector2.zero;
         boids = boids.Where(o => DistanceTo(o) <= neighborhoodRadius / 2);
@@ -138,7 +138,7 @@ public class Flocking : MonoBehaviour
         return steer;
     }
 
-    private float DistanceTo(Flocking boid)
+    private float DistanceTo(BoatAutoPilot boid)
     {
         return Vector3.Distance(boid.transform.position, Position);
     }
